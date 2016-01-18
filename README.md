@@ -11,3 +11,4 @@ Install wheels from *http://www.lfd.uci.edu/~gohlke/pythonlibs/*
 * install matplotlib
 * install OpenCV 2.4
 * install PyQt4
+* install scipy
