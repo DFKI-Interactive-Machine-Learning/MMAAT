@@ -1,6 +1,6 @@
 # SePanT #
 
-
+dev version
 
 ### Setup ###
 Install wheels from *http://www.lfd.uci.edu/~gohlke/pythonlibs/*
