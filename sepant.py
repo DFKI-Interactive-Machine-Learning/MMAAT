@@ -62,6 +62,8 @@ class SepantUI(QtGui.QMainWindow):
         self.setCentralWidget(self.main_tab)
         self.initChannelControl()
         self.setMenuBar(self.create_menu_bar())
+        menubar = self.menuBar()
+        menubar.setNativeMenuBar(False)
         # ----------------------- Generics displays --------------------------
         self.displays = {}
         # --------------------------------------------------------------------
