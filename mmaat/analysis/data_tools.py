@@ -9,8 +9,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import csv
 import h5py as h5
 import matplotlib.pyplot as p
-import sepan
-import sepan.data as data
+import mmaat
+import mmaat.data as data
 import numpy as np
 import os
 
@@ -39,7 +39,7 @@ def extract_gestures(h5_fname, report_path, plotdata=True, ignoreData=[]) :
     '''
     h5_obj = h5.File(h5_fname,'r')
     desc, classes = data.read_description(h5_obj)
-    indices = sepan.calc_indices(desc)
+    indices = mmaat.calc_indices(desc)
     # ---- not all information from the signal is relevant --------------
     includeIndex = []
     data_desc = []

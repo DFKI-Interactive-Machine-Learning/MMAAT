@@ -6,13 +6,13 @@
 '''
 from PyQt4 import QtCore, QtGui
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from sepan.ui.models.sensordata import SensorDataModelSegment
+from mmaat.ui.models.sensordata import SensorDataModelSegment
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-log = logging.getLogger("sepan.ui.widgets.plots")
+log = logging.getLogger("mmaat.ui.widgets.plots")
 
 
 def hexcolor(color) :

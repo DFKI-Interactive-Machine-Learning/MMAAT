@@ -7,8 +7,8 @@
 import xml.dom.minidom as dom
 import csv
 import h5py as h5
-import sepan
-import sepan.analysis.processing as p
+import mmaat
+import mmaat.analysis.processing as p
 import numpy as np
 import os
 import shutil
@@ -34,7 +34,7 @@ def normalization_factors(dset, method='2sigma'):
     return means, sds * 2
 
 # -------------------------- PyBrain sequential dataset -----------------------
-def add_to_dataset(dset,h5file,features=sepan.FEATURES, classes=sepan.CLASSES):
+def add_to_dataset(dset,h5file,features=mmaat.FEATURES, classes=mmaat.CLASSES):
     '''
     Adding data to the sequential dataset.
     Arguments:
@@ -58,7 +58,7 @@ def add_to_dataset(dset,h5file,features=sepan.FEATURES, classes=sepan.CLASSES):
             continue
         dset.addSample(dat,tar)
 
-def load_numpy_dataset(h5dir,features=sepan.FEATURES):
+def load_numpy_dataset(h5dir,features=mmaat.FEATURES):
     '''
     Load dataset.
     Arguments:
@@ -118,7 +118,7 @@ def get_array_data_for_object(h5_obj):
         signal = h5_obj['data']['signal']
         target = h5_obj['data']['target']
         timestamp = h5_obj['data']['timestamp']
-        a = np.zeros((len(signal),len(sepan.FEATURES) + 3),dtype=np.float32)
+        a = np.zeros((len(signal),len(mmaat.FEATURES) + 3),dtype=np.float32)
         a[:,:-3] = signal
         a[:,-3] = timestamp
         a[:,-2] = target

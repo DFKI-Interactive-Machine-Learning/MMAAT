@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-'''
- DFKI GmbH 2013 - 20xx
- All rights reserved.
- Maintainer: Markus Weber
-'''
 from PyQt4 import QtCore, QtGui
-from sepan.ui.models.sensordata import SensorDataModelSegment
+from mmaat.ui.models.sensordata import SensorDataModelSegment
 import logging
-import sepan
+import mmaat
 
-log = logging.getLogger("sepan.ui.widgets.utilwidgets")
+log = logging.getLogger("mmaat.ui.widgets.utilwidgets")
 
 APP_DESCRIPTION = '''
-Sequential Pattern Analysis Toolkit (SePAnT).
-
+Multimodal Multisensor Activity Annotation Tool (MMAAT)
 '''
 
 ANIMSLIDER_STYLESHEET = """QSlider::groove:horizontal {
@@ -40,7 +34,7 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
 
     def showAbout(self):
         self.iconMenu.setEnabled(False)
-        QtGui.QMessageBox.about(None, self.tr("About SePAnT"), self.tr(APP_DESCRIPTION))
+        QtGui.QMessageBox.about(None, self.tr("About MMAAT"), self.tr(APP_DESCRIPTION))
         # Re-enable the tray icon menu
         self.iconMenu.setEnabled(True)
 
@@ -672,9 +666,9 @@ class PlotControl(QtGui.QWidget):
             if not (self.ROI_seg_x is None) :
                 ret_val = None
                 if self.get_label_mode() == 0 :
-                    ret_val = QtGui.QInputDialog.getItem(self,"Choose segment label", "Label:", sepan.CLASSES)
+                    ret_val = QtGui.QInputDialog.getItem(self,"Choose segment label", "Label:", mmaat.CLASSES)
                 else :
-                    ret_val = QtGui.QInputDialog.getItem(self,"Choose segment label", "Label:", sepan.ATTENTION)
+                    ret_val = QtGui.QInputDialog.getItem(self,"Choose segment label", "Label:", mmaat.ATTENTION)
                 name = str(ret_val[0]) #return type is tuple with string first and boolean second
                 if ret_val[1] :
                     self.model.set_segment_name(self.idx, self.sid,name)

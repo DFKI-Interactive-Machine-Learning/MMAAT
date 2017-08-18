@@ -4,7 +4,7 @@
  All rights reserved.
  Maintainer: Markus Weber
 '''
-__author__  = "Markus Weber <Markus.Weber@dfki.de>"
+__author__  = "DFKI GmbH"
 __status__  = "alpha"
 __version__ = "0.1"
 __date__    = "1. July 2013"

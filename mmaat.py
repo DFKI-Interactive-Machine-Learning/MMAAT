@@ -1,25 +1,37 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
- DFKI GmbH 2013 - 20xx
- All rights reserved.
- Maintainer: Markus Weber
+    MMAAT - Multimodal Multisensor Activity Annotation Tool
+    Copyright (C) 2012-2017  DFKI GmbH
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import matplotlib
 matplotlib.use('Agg')
 from PyQt4 import QtCore, QtGui
 
-from sepan import ICONS_PATH
-from sepan.ui.models.sensordata import SensorDataModel
-from sepan.ui.widgets.plots import SensorPyplotView
-from sepan.ui.widgets.utilwidgets import PlotControl, \
+from mmaat import ICONS_PATH
+from mmaat.ui.models.sensordata import SensorDataModel
+from mmaat.ui.widgets.plots import SensorPyplotView
+from mmaat.ui.widgets.utilwidgets import PlotControl, \
     SingleItemMaintainAspectRatioLayout
 import cv2.cv as cv
-import sepan
-import sepan.ui.widgets.utilwidgets as ui
-import sepan.analysis.report as report
-import sepan.data as data
-import sepan.utils.io as utils
+import mmaat
+import mmaat.ui.widgets.utilwidgets as ui
+import mmaat.analysis.report as report
+import mmaat.data as data
+import mmaat.utils.io as utils
 import thread
 import os
 import re
@@ -27,10 +39,10 @@ import sys
 import json
 
 """
-Sequential Pattern Analysis Toolkit
+Multimodal Multisensor Activity Annotation Tool (MMAAT)
 ------------------------------------
 """
-class SepantUI(QtGui.QMainWindow):
+class MMAAT_UI(QtGui.QMainWindow):
     #----------------------- CONSTANTS ----------------------------------------
     ICON_NAME                = 'icon.png'
     FIXED_HEIGHT             = 320
@@ -40,7 +52,7 @@ class SepantUI(QtGui.QMainWindow):
     plotcontrol_xlim_changed = QtCore.pyqtSignal(int,int,int)
     status_bar_changed       = QtCore.pyqtSignal(str,int)
     popup_triggered          = QtCore.pyqtSignal(str,str)
-    SETTINGS_PATH            = sepan.CONFIG_PATH
+    SETTINGS_PATH            = mmaat.CONFIG_PATH
     settings_dict            = {}
     #--------------------------------------------------------------------------
 
@@ -50,7 +62,7 @@ class SepantUI(QtGui.QMainWindow):
         # UI config
         self.systray = ui.SystemTrayIcon(os.path.join(ICONS_PATH, self.ICON_NAME), self)
         self.setWindowIcon(QtGui.QIcon(os.path.join(ICONS_PATH, self.ICON_NAME)))
-        self.setWindowTitle("Sequential Pattern Analysis Toolkit (SePAnT)")
+        self.setWindowTitle("Multimodal Multisensor Activity Annotation Tool (MMAAT)")
         self.hdf5_fname = ''
         self.algorithm_params = {}
         # --------------------------------------------------------------------
@@ -65,7 +77,7 @@ class SepantUI(QtGui.QMainWindow):
         # ----------------------- Generics displays --------------------------
         self.displays = {}
         # --------------------------------------------------------------------
-        self.session_file = os.path.join(SepantUI.SETTINGS_PATH, 'last.session')
+        self.session_file = os.path.join(MMAAT_UI.SETTINGS_PATH, 'last.session')
         last_session = utils.unserialize_object(self.session_file)
         self.settings_dict = last_session if last_session is not None else {
                                  'last_save_path'  : '.',
@@ -361,10 +373,10 @@ class SepantUI(QtGui.QMainWindow):
         f2 = None
         if self.model.get_label_mode() == 0 :
             f2 = lambda : self.model.relabel_segment(idx, sid,
-                            str(QtGui.QInputDialog.getItem(self,"Update segment label", "Label:", sepan.CLASSES)[0]))
+                            str(QtGui.QInputDialog.getItem(self,"Update segment label", "Label:", mmaat.CLASSES)[0]))
         else :
             f2 = lambda : self.model.relabel_segment(idx, sid,
-                            str(QtGui.QInputDialog.getItem(self,"Update segment label", "Label:", sepan.ATTENTION)[0]))
+                            str(QtGui.QInputDialog.getItem(self,"Update segment label", "Label:", mmaat.ATTENTION)[0]))
         popup_s.addAction("Remove label", f1)
         popup_s.addAction("Update label", f2)
         popup_e = QtGui.QMenu()
@@ -517,8 +529,8 @@ class SepantUI(QtGui.QMainWindow):
         h5_name = re.sub(r".csv",".h5", fname)
         if h5_name == self.hdf5_fname : self.model.close()
         data.convert_csv_to_hdf(fname, h5_name, True,
-                                sepan.CLASSES,
-                                sepan.IGNORE_FEATURES)
+                                mmaat.CLASSES,
+                                mmaat.IGNORE_FEATURES)
         self.set_hdf(h5_name)
 
 
@@ -571,13 +583,13 @@ class SepantUI(QtGui.QMainWindow):
         """
         if self.model is not None :
             self.model.store_labels()
-        if not os.path.exists(SepantUI.SETTINGS_PATH) :
-            os.makedirs(SepantUI.SETTINGS_PATH)
+        if not os.path.exists(MMAAT_UI.SETTINGS_PATH) :
+            os.makedirs(MMAAT_UI.SETTINGS_PATH)
         utils.serialize_object(self.settings_dict, self.session_file)
         self.systray.hide()
 
 if __name__ == "__main__" :
     app = QtGui.QApplication(sys.argv)
-    ui = SepantUI()
+    ui = MMAAT_UI()
     ui.show()
     sys.exit(app.exec_())

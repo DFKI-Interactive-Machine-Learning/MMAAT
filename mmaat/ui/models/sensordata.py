@@ -5,8 +5,8 @@
 """
 from PyQt4 import QtCore, QtGui
 import h5py as h5
-import sepan
-import sepan.data as data
+import mmaat
+import mmaat.data as data
 import numpy as np
 import os
 import time
@@ -450,7 +450,7 @@ class DataModel():
         if channeldata is None : channeldata = self.channeldata
         signal = sensordata['data']['signal']
         for channel in self.channeldata :
-            i_pos = sepan.INDICES[channel.get_name()]
+            i_pos = mmaat.INDICES[channel.get_name()]
             channel.set_data(signal[self.begin:self.end,i_pos])
             channel.set_offset(self.begin)
     def get_data_offset(self):
@@ -735,8 +735,8 @@ class SensorDataModel(QtCore.QAbstractItemModel, DataModel):
         colors = [QtGui.QColor.fromHsv(h,s,v).getRgb()[:-1] for h,s,v in hsv_display_colors(len(classes),srange=(100,100),vrange=(180,180),nv=1)]
         for i in xrange(len(classes)) :
             self.label_colors[classes[i]] = colors[i]
-        sepan.set_descriptions(desc)
-        sepan.set_classes(classes)
+        mmaat.set_descriptions(desc)
+        mmaat.set_classes(classes)
         self.update_channels(desc)
         self.end = self.get_data_num_samples()
         self.interactive_lastupdate = 0
@@ -842,7 +842,7 @@ class SensorDataModel(QtCore.QAbstractItemModel, DataModel):
                     start = i
                     inclass = True
                 elif inclass :
-                    self.add_segment(start, i, sepan.CLASSES[last_label])
+                    self.add_segment(start, i, mmaat.CLASSES[last_label])
                     if not target[i] == 0 : # Two classes are directly connected
                         start = i
                         inclass = True
@@ -857,7 +857,7 @@ class SensorDataModel(QtCore.QAbstractItemModel, DataModel):
                         start_attention = i
                         inattention = True
                     elif inattention :
-                        self.add_segment(start_attention, i, sepan.ATTENTION[last_attention], 1)
+                        self.add_segment(start_attention, i, mmaat.ATTENTION[last_attention], 1)
                         if not a == 0 : # Two classes are directly connected
                             start_attention = i
                             inattention = True
@@ -1200,7 +1200,7 @@ class SensorDataModel(QtCore.QAbstractItemModel, DataModel):
             h5_file = h5.File(self.sensorfname,'a')
             h5_file['data']['target'][:] = 0
             for seg in self.segments[self.segmentmode] :
-                h5_file['data']['target'][seg.start:seg.end] = sepan.ID_CLASSES[seg.name]
+                h5_file['data']['target'][seg.start:seg.end] = mmaat.ID_CLASSES[seg.name]
         except Exception as e :
             print e
         finally:

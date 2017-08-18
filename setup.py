@@ -5,7 +5,7 @@ import os, sys
 import numpy
 import matplotlib
 
-import sepan.ui
+import mmaat.ui
 # We need to import the glob module to search for all files.
 import glob
 import mpl_toolkits
@@ -34,19 +34,19 @@ opts = {
 
 data_files = [(r'data/resources/icons', glob.glob('../data/resources/icons/*.*'))
                   ].extend(matplotlib.get_py2exe_datafiles())
-build_exe_options = {"packages": ['sepan', 'sepan.ui', 'sepan.ui.models',
-                                  'sepan.ui.widgets', 'sepan.utils', 'sepan.analysis'],
+build_exe_options = {"packages": ['mmaat', 'mmaat.ui', 'mmaat.ui.models',
+                                  'mmaat.ui.widgets', 'mmaat.utils', 'mmaat.analysis'],
                      "excludes": ['_gtkagg', '_tkagg', '_agg2', '_cairo', '_cocoaagg',
                              '_fltkagg', '_gtk', '_gtkcairo', 'wx._core' ]}
 setup(
-    windows=[{"script":'sepant.py'}],
+    windows=[{"script":'mmaatt.py'}],
     options=opts,
     data_files=data_files,
-    name='sepant',
+    name='mmaatt',
     version='1.0',
     description='Sequential Pattern Analysis Toolkit',
     author='Markus Weber',
     author_email='markus.weber@dfki.de',
-    packages=['sepan', 'sepan.ui', 'sepan.ui.models',
-              'sepan.ui.widgets', 'sepan.utils', 'sepan.analysis']
+    packages=['mmaat', 'mmaat.ui', 'mmaat.ui.models',
+              'mmaat.ui.widgets', 'mmaat.utils', 'mmaat.analysis']
 )

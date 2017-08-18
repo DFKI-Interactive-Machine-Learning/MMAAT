@@ -4,7 +4,7 @@
  All rights reserved.
  Maintainer: Markus Weber
 '''
-from sepan import INDICES
+from mmaat import INDICES
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np

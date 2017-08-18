@@ -94,11 +94,11 @@ def set_attention(cls):
 
 
 # -------------------------- Directories  ----------------------------------------
-SEPANT_SHARE = '/usr/share/sepant/data'
+MMAAT_SHARE = '/usr/share/MMAAT/data'
 RESOURCES_PATH = None
-SEPANT_INSTALLED = os.path.exists(SEPANT_SHARE)
-if SEPANT_INSTALLED :
-    DATA_PATH = SEPANT_SHARE
+MMAAT_INSTALLED = os.path.exists(MMAAT_SHARE)
+if MMAAT_INSTALLED :
+    DATA_PATH = MMAAT_SHARE
 else : # development structure
     DATA_PATH = os.path.join(os.path.dirname(__file__), '../data')
 RESOURCES_PATH = os.path.join(DATA_PATH, 'resources')
